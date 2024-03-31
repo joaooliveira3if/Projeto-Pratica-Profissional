@@ -17,7 +17,7 @@ $sql = "SELECT * FROM professor WHERE login = '$login' AND senha = '$senha'";
 
 if ($result = mysqli_query($conn, $sql)) {
     if (mysqli_num_rows($result) > 0) {
-        header("Location: ");
+        header("Location: http://joaoliveira1.com/alunos.html");  
         exit();
     } else {
         echo "Login failed. Please check your credentials.";
