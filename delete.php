@@ -16,7 +16,7 @@ $data = $_POST['data'];
 $presenca = $_POST['presenca'];
 
 if ($result = mysqli_query($conn, "DELETE FROM alunos WHERE nome = '$nome' AND turma = '$turma' AND data = '$data' AND presenca = '$presenca'")) {
-    header("Location: http://joaoliveira1.com/alunos.html");    
+    header("Location: ");    
     exit();
     mysqli_free_result($result);
     

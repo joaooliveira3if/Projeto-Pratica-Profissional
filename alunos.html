@@ -91,7 +91,7 @@ function deleteItems(button) {
   
   let row = button.parentElement.parentElement;
   console.log(row)
-  const itemName = row.querySelector("td:first-child").textContent.trim(); // Get the text content of the first td in the row
+  const itemName = row.querySelector("td:first-child").textContent.trim(); 
   const itemTurma = row.querySelector("td:nth-child(2)").textContent.trim();
   const itemData = row.querySelector("td:nth-child(3)").textContent.trim();
   const itemPresenca = row.querySelector("td:nth-child(4)").textContent.trim();
