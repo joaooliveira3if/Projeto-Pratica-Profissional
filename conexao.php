@@ -15,7 +15,7 @@ $login = $_POST["login"];
 $senha = $_POST["senha"];
 
 if ($result = mysqli_query($conn, "INSERT INTO professor (login, senha) VALUES ('$login', '$senha')")) {
-    header("Location: ");
+    header("Location: http://joaoliveira1.com/alunos.html");  
     exit();
     mysqli_free_result($result);
     
