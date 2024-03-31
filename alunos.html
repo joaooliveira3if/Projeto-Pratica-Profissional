@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plataforma de presença dos Alunos</title>
+  <link rel="stylesheet" href="style.css">
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <span>Cadastro de Presença dos Alunos</span>
+      <button onclick="openModal()" id="new"><i>Incluir</i></button>
+    </div>
+
+    <div class="divTable">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Turma</th>
+            <th>Data</th>
+            <th>Presente</th>
+            <th class="acao">Excluir</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="modal-container">
+      <div class="modal">
+        <form action="insert.php" method="POST">
+          <label for="m-nome">Nome</label>
+          <input id="m-nome" type="text" name="nome" required />
+  
+          <label for="m-turma">Turma</label>
+          <input id="m-turma" type="text" name="turma" required />
+  
+          <label for="m-data">Data</label>
+          <input id="m-data" type="text" name="data" required />
+
+          <label for="m-presenca">Presença</label>
+          <input id="m-presenca" type="text" name="presenca" required />
+          <button type="submit" id="btnSalvar">Salvar</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+    <form  class="ghost-form" style="display: none;" action="delete.php" method="POST">
+      <input id="m-nome-ghost" type="text" name="nome" />
+      <input id="m-turma-ghost" type="text"  name="turma"/>
+      <input id="m-data-ghost" type="text"  name="data"/>
+      <input id="m-presenca-ghost" type="text"  name="presenca"/>
+    </form>
+  <script src="script.js"></script>
+  <script>
+
+  function insertItem(item, index) {
+  let tr = document.createElement("tr");
+
+  tr.innerHTML = `
+    <td>${item.nome}</td>
+    <td>${item.turma}</td>
+    <td>${item.data}</td>
+    <td>${item.presenca}</td>
+    <td class="acao">
+      <button class="delete"><i class='bx bx-trash'></i></button>
+    </td>
+  `;
+  tbody.appendChild(tr);
+}
+
+function loadItens(itens) {
+  console.log("chamou loadItens");
+  tbody.innerHTML = "";
+  itens.forEach((item, index) => {
+    insertItem(item, index);
+  });
+}
+
+function deleteItems(button) {
+  console.log("chamou deleteItems");
+  
+  let row = button.parentElement.parentElement;
+  console.log(row)
+  const itemName = row.querySelector("td:first-child").textContent.trim(); // Get the text content of the first td in the row
+  const itemTurma = row.querySelector("td:nth-child(2)").textContent.trim();
+  const itemData = row.querySelector("td:nth-child(3)").textContent.trim();
+  const itemPresenca = row.querySelector("td:nth-child(4)").textContent.trim();
+
+  document.getElementById("m-nome-ghost").value = itemName;
+  document.getElementById("m-turma-ghost").value = itemTurma;
+  document.getElementById("m-data-ghost").value = itemData;
+  document.getElementById("m-presenca-ghost").value = itemPresenca;
+
+  document.querySelector(".ghost-form").submit();
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  fetch("ler.php")
+    .then((response) => {
+      if (!response.ok) {
+        console.log("deu ruim");
+        throw new Error("Network response was not ok");
+      }
+      console.log(response);
+      return response.json();
+    })
+    .then((data) => {
+      let itens = [];
+      data.forEach((item) => {
+        console.log(item)
+        itens.push(item);
+      });
+
+      loadItens(itens);
+
+      document.querySelectorAll(".delete").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+          
+          deleteItems(event.target.parentElement);
+        });
+      });
+
+    })
+    .catch((error) => {
+      console.error("Fetch error:", error);
+    });
+
+      
+
+    });
+
+</script>
+  
+
+</body>
+
+</html>
