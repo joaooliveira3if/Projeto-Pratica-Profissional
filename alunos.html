@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plataforma de presença dos Alunos</title>
+  <title>Plataforma de Presença dos Alunos</title>
   <link rel="stylesheet" href="style.css">
   <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -14,6 +14,7 @@
   <div class="container">
     <div class="header">
       <span>Cadastro de Presença dos Alunos</span>
+      <button onclick="window.print()" class="botao">Salvar Relatório</button>
       <button onclick="openModal()" id="new"><i>Incluir</i></button>
     </div>
 
@@ -91,7 +92,7 @@ function deleteItems(button) {
   
   let row = button.parentElement.parentElement;
   console.log(row)
-  const itemName = row.querySelector("td:first-child").textContent.trim(); 
+  const itemName = row.querySelector("td:first-child").textContent.trim(); // Get the text content of the first td in the row
   const itemTurma = row.querySelector("td:nth-child(2)").textContent.trim();
   const itemData = row.querySelector("td:nth-child(3)").textContent.trim();
   const itemPresenca = row.querySelector("td:nth-child(4)").textContent.trim();
@@ -105,7 +106,9 @@ function deleteItems(button) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+     // Add event listener to all delete buttons
 
+  // Fetch data using native JavaScript fetch API
   fetch("ler.php")
     .then((response) => {
       if (!response.ok) {
@@ -113,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
         throw new Error("Network response was not ok");
       }
       console.log(response);
-      return response.json();
+      return response.json(); // Parse response as JSON
     })
     .then((data) => {
       let itens = [];
